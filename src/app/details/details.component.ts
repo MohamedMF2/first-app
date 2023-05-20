@@ -49,7 +49,7 @@ import { HousingLocation } from '../housinglocation';
 })
 export class DetailsComponent {
   route: ActivatedRoute = inject(ActivatedRoute);
-  
+
   housingLocationId = -1;
   //service injection
   housingService = inject(HousingService);
