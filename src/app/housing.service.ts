@@ -5,7 +5,25 @@ import { HousingLocation } from './housinglocation'
   providedIn: 'root'
 })
 export class HousingService {
+  url = 'http://localhost:3000/locations';
 
+
+  submitApplication(firstName: string, lastName: string, email: string) {
+    console.log(`Home application received:firstName: ${firstName},lastName: ${lastName},email: ${email}`);
+  }
+
+  async getAllHousingLocations(): Promise<HousingLocation[]> {
+    const data = await fetch(this.url);
+    return await data.json() ?? [];
+  }
+
+  async getHousingLocationById(id: number): Promise<HousingLocation | undefined> {
+    const data = await fetch(`${this.url}/${id}`);
+    return await data.json() ?? {};
+  }
+  constructor() { }
+
+  /* sync approch
   housingLocationList: HousingLocation[] = [{
     id: 9999,
     name: 'Test Home',
@@ -117,16 +135,12 @@ export class HousingService {
     laundry: true
   }];
 
-  submitApplication(firstName: string, lastName: string, email: string) {
-    console.log(`Home application received:firstName: ${firstName},lastName: ${lastName},email: ${email}`);
+    getAllHousingLocations(): HousingLocation[] {
+     return this.housingLocationList;
+      
+    getHousingLocationById(id: number): HousingLocation | undefined {
+      return this.housingLocationList.find(housingLocation => housingLocation.id === id);
   }
 
-  getAllHousingLocations(): HousingLocation[] {
-    return this.housingLocationList;
-  }
-
-  getHousingLocationById(id: number): HousingLocation | undefined {
-    return this.housingLocationList.find(housingLocation => housingLocation.id === id);
-  }
-  constructor() { }
+*/
 }

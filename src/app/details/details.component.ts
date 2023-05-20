@@ -64,24 +64,35 @@ export class DetailsComponent {
 
 
   constructor() {
-    this.housingLocationId = Number(this.route.snapshot.params['id']);
 
-    console.log(`
-    {
-      housingLocationId: ${this.housingLocationId} ,
-      route:${this.route}
-    }
-    --DetailsComponent constructor --
-    `);
+    //async approch
+    const housingLocationId = +this.route.snapshot.params['id']
+    this.housingService.getHousingLocationById(housingLocationId).then(housingLocation => {
+      this.housingLocation = housingLocation;
+    });
 
-    this.housingLocation = this.housingService.getHousingLocationById(this.housingLocationId);
+    /* sync approch constructor
 
-    console.log(`
-    {
-      housingLocation: ${JSON.stringify(this.housingLocation)} ,
-    }
-    --DetailsComponent constructor --
-    `);
+   this.housingLocationId = Number(this.route.snapshot.params['id']);
+
+   console.log(`
+   {
+     housingLocationId: ${this.housingLocationId} ,
+     route:${this.route}
+   }
+   --DetailsComponent constructor --
+   `);
+
+   this.housingLocation = this.housingService.getHousingLocationById(this.housingLocationId);
+
+   console.log(`
+   {
+     housingLocation: ${JSON.stringify(this.housingLocation)} ,
+   }
+   --DetailsComponent constructor --
+   `);
+ 
+ */
   }
 
   // on form submission
@@ -92,4 +103,7 @@ export class DetailsComponent {
       this.applyForm.value.email ?? ''
     );
   }
+
+
+
 }
